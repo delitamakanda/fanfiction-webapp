@@ -37,7 +37,13 @@ export default defineConfig({
       viteOptimizeDeps: true,
       dirs: ['src/stores/**', 'src/composables/**'],
     }),
-    vue(),
+    vue({
+      template: {
+        compilerOptions: {
+          isCustomElement: (element) => element.startsWith('iconify-icon')
+        }
+      }
+    }),
     vueDevTools(),
   ],
   css: {
