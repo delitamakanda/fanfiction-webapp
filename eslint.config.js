@@ -16,7 +16,11 @@ export default [
 
   ...pluginVue.configs['flat/essential'],
   ...vueTsEslintConfig(),
-  
+  {
+    rules: {
+      'vue/multi-word-component-names': 0
+    }
+  },
   {
     ...pluginVitest.configs.recommended,
     files: ['src/**/__tests__/*'],

@@ -21,7 +21,15 @@ declare module 'vue-router/auto-routes' {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
     '/[...catchAll]': RouteRecordInfo<'/[...catchAll]', '/:catchAll(.*)', { catchAll: ParamValue<true> }, { catchAll: ParamValue<false> }>,
     '/about': RouteRecordInfo<'/about', '/about', Record<never, never>, Record<never, never>>,
+    '/dashboard/': RouteRecordInfo<'/dashboard/', '/dashboard', Record<never, never>, Record<never, never>>,
+    '/fanfics/': RouteRecordInfo<'/fanfics/', '/fanfics', Record<never, never>, Record<never, never>>,
+    '/fanfics/[slug]': RouteRecordInfo<'/fanfics/[slug]', '/fanfics/:slug', { slug: ParamValue<true> }, { slug: ParamValue<false> }>,
+    '/help/': RouteRecordInfo<'/help/', '/help', Record<never, never>, Record<never, never>>,
+    '/help/faq/': RouteRecordInfo<'/help/faq/', '/help/faq', Record<never, never>, Record<never, never>>,
     '/login': RouteRecordInfo<'/login', '/login', Record<never, never>, Record<never, never>>,
+    '/posts/': RouteRecordInfo<'/posts/', '/posts', Record<never, never>, Record<never, never>>,
+    '/posts/[slug]': RouteRecordInfo<'/posts/[slug]', '/posts/:slug', { slug: ParamValue<true> }, { slug: ParamValue<false> }>,
     '/register': RouteRecordInfo<'/register', '/register', Record<never, never>, Record<never, never>>,
+    '/user/[username]': RouteRecordInfo<'/user/[username]', '/user/:username', { username: ParamValue<true> }, { username: ParamValue<false> }>,
   }
 }

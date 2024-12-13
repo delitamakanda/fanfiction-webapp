@@ -6,8 +6,7 @@ const GuestLayout = defineAsyncComponent(
   () => import('./components/Layout/main/GuestLayout.vue')
 )
 
-import { RouterView } from 'vue-router'
-const user = null;
+const user = ref(null);
 
 useMeta({
   title: 'Fanfiction',
