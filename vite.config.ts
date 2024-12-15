@@ -3,7 +3,7 @@ import VueRouter from 'unplugin-vue-router/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 
-import tailwindcss from 'tailwindcss'
+import tailwind from 'tailwindcss'
 import autoprefixer from 'autoprefixer'
 
 import { defineConfig } from 'vite'
@@ -48,7 +48,7 @@ export default defineConfig({
   ],
   css: {
     postcss: {
-      plugins: [tailwindcss(), autoprefixer()]
+      plugins: [tailwind(), autoprefixer()]
     }
   },
   resolve: {
