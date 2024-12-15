@@ -1,16 +1,20 @@
 <script lang="ts" setup>
+import { menuKey } from '@/utils/injectionKeys'
 const { pageData } = storeToRefs(usePageStore())
+const fanficSheetOpen = ref(false)
 const menuOpen = ref(false)
 const toggleMenu = () => (menuOpen.value = !menuOpen.value)
 
-provide(
+provide(menuKey, {
   menuOpen,
   toggleMenu,
+}
 )
 </script>
 
 <template>
   <div>
+    <Sidebar @taskClicked="fanficSheetOpen = true" />
     <div class="flex flex-col transition-[margin]" :class="{ 'ml-52': menuOpen, 'ml-24': !menuOpen }">
       <TopNavbar />
       <main class="flex flex-col flex-1 gap-4 p-4 lg:gap-6 lg:p-6">
