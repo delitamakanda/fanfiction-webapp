@@ -5,10 +5,16 @@ const formData = ref({
   password: '',
   confirmPassword: ''
 })
+import { register} from '@/utils/apiAuth'
 const router = useRouter()
 
 const signup = async () => {
-  // todo: validate form data and send a POST request to the server
+  const isRegister = await register(formData.value)
+  if (isRegister.success) {
+    router.push('/')
+  } else {
+    console.log('Failed to register', isRegister.message)
+  }
 }
 </script>
 

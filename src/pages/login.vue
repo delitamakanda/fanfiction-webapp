@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { watchDebounced } from '@vueuse/core'
+import { login } from '@/utils/apiAuth'
 
 const formData = ref({
-  email: '',
+  username: '',
   password: '',
-  rememberMe: false,
 })
 
 const { serverError, handleServerError, realtimeErrors, handleLoginForm } = useFormErrors()
@@ -22,8 +22,11 @@ watchDebounced(
 )
 
 const signIn = async () => {
-  // todo validate form data and perform sign-in logic
-  const error = { status: 401, message: 'Invalid credentials',  name: 'email' }
+  const { error } = await login(formData.value)
+  if (!error) {
+    return router.push('/')
+  }
+
   handleServerError(error)
 }
 </script>
@@ -41,20 +44,20 @@ const signIn = async () => {
 
         <form class="grid gap-4" @submit.prevent="signIn">
           <div class="grid gap-2">
-            <Label id="email" class="text-left">Email</Label>
+            <Label id="username" class="text-left">Username</Label>
             <Input
-              type="email"
-              placeholder="johndoe19@example.com"
+              type="text"
+              placeholder="johndoe19"
               required
-              v-model="formData.email"
+              v-model="formData.username"
               :class="{ 'border-red-500': serverError }"
             />
             <ul
               class="text-sm text-left text-red-500"
-              v-if="realtimeErrors?.email?.length"
+              v-if="realtimeErrors?.username?.length"
             >
               <li
-                v-for="error in realtimeErrors.email"
+                v-for="error in realtimeErrors.username"
                 :key="error"
                 class="list-disc"
               >

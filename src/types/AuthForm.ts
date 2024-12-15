@@ -1,9 +1,9 @@
 export interface LoginForm {
-  email: string;
+  username: string;
   password: string;
 }
 
 export interface RegistrationForm extends LoginForm {
-  username: string;
+  email: string;
   confirmPassword: string;
 }
