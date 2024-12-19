@@ -1,4 +1,5 @@
 import type { User, Profile } from '@/types/user'
+import { axiosClient } from '@/lib/axiosClient.ts'
 export const useAuthStore = defineStore('auth-store', () => {
   const user = ref<null | User>(null)
   const profile = ref<null|Profile>(null)
@@ -8,11 +9,12 @@ export const useAuthStore = defineStore('auth-store', () => {
     if (!user.value) {
       profile.value = null
     }
-  }
-  if (!profile.value || profile.value.id !== user.value.id) {
-    // todo fetch and update profile
 
-    profile.value = null
+    if (!profile.value || profile.value.id !== user.value?.id) {
+      const { data } = await axiosClient.get<Profile>(`/profiles/${user.value?.id}/`)
+
+      profile.value = data || null
+    }
   }
 
   const setAuth = async (userSession: null | User) => {
@@ -26,7 +28,10 @@ export const useAuthStore = defineStore('auth-store', () => {
   }
 
   const getSession = async () => {
-    // todo fetch and return user session
+    //const { data } = await axiosClient.get<User>('/user/')
+    //if (data) {
+      // await setAuth(<User>({  id: 1, username: 'test', email: 'test@test.com', first_name: 'Test', last_name: 'User', date_joined: '2022-01-01' }))
+    //}
   }
 
   const trackAuthChanges = async () => {

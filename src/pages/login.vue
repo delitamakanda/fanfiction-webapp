@@ -18,30 +18,26 @@ watchDebounced(
   {
     debounce: 1000,
     deep: true,
-  }
+  },
 )
 
 const signIn = async () => {
-  const { error } = await login(formData.value)
+  const { error } = await login(formData.value) as { error: never }
   if (!error) {
-    return router.push('/')
+    router.push('/')
   }
-
   handleServerError(error)
 }
 </script>
 
 <template>
-  <div
-    class="mx-auto flex w-full justify-center items-center p-10 text-center -mt-20 min-h-[90vh]"
-  >
+  <div class="mx-auto flex w-full justify-center items-center p-10 text-center -mt-20 min-h-[90vh]">
     <Card class="max-w-sm w-full mx-auto">
       <CardHeader>
         <CardTitle class="text-2xl"> Login </CardTitle>
         <CardDescription> Login to your account </CardDescription>
       </CardHeader>
       <CardContent>
-
         <form class="grid gap-4" @submit.prevent="signIn">
           <div class="grid gap-2">
             <Label id="username" class="text-left">Username</Label>
@@ -52,15 +48,8 @@ const signIn = async () => {
               v-model="formData.username"
               :class="{ 'border-red-500': serverError }"
             />
-            <ul
-              class="text-sm text-left text-red-500"
-              v-if="realtimeErrors?.username?.length"
-            >
-              <li
-                v-for="error in realtimeErrors.username"
-                :key="error"
-                class="list-disc"
-              >
+            <ul class="text-sm text-left text-red-500" v-if="realtimeErrors?.username?.length">
+              <li v-for="error in realtimeErrors.username" :key="error" class="list-disc">
                 {{ error }}
               </li>
             </ul>
@@ -68,9 +57,7 @@ const signIn = async () => {
           <div class="grid gap-2">
             <div class="flex items-center">
               <Label id="password">Password</Label>
-              <a href="#" class="inline-block ml-auto text-xs underline">
-                Forgot your password?
-              </a>
+              <a href="#" class="inline-block ml-auto text-xs underline"> Forgot your password? </a>
             </div>
             <Input
               id="password"
@@ -80,15 +67,8 @@ const signIn = async () => {
               v-model="formData.password"
               :class="{ 'border-red-500': serverError }"
             />
-            <ul
-              class="text-sm text-left text-red-500"
-              v-if="realtimeErrors?.password?.length"
-            >
-              <li
-                v-for="error in realtimeErrors.password"
-                :key="error"
-                class="list-disc"
-              >
+            <ul class="text-sm text-left text-red-500" v-if="realtimeErrors?.password?.length">
+              <li v-for="error in realtimeErrors.password" :key="error" class="list-disc">
                 {{ error }}
               </li>
             </ul>

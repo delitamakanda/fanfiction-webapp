@@ -5,13 +5,17 @@ const formData = ref({
   password: '',
   confirmPassword: ''
 })
+
+const errors = ref({})
+
 import { register} from '@/utils/apiAuth'
+import { validateEmail, validatePassword, validateConfirmPassword } from '@/utils/formValidations'
 const router = useRouter()
 
 const signup = async () => {
   const isRegister = await register(formData.value)
   if (isRegister.success) {
-    router.push('/')
+    router.push('/login')
   } else {
     console.log('Failed to register', isRegister.message)
   }
@@ -34,7 +38,7 @@ const signup = async () => {
             <Input
               id="username"
               type="text"
-              placeholder="johndoe19"
+              placeholder=""
               required
               v-model="formData.username"
             />
@@ -74,7 +78,6 @@ const signup = async () => {
             />
           </div>
           <Button type="submit" class="w-full"> Register </Button>
-          <!-- <Button variant="outline" class="w-full"> Login with Google </Button> -->
         </form>
         <div class="mt-4 text-sm text-center">
           Already have an account?

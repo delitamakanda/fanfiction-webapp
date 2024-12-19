@@ -4,17 +4,24 @@ type FormErrors<T> = {
   [K in keyof T]?: string[]
 }
 
-interface AuthError extends Error {
-  status: number;
-  message: string;
+interface ErrorResponse {
+  response?: { data?: { detail?: string } }
 }
 
 export const useFormErrors = () => {
   const serverError = ref('')
   const realtimeErrors = ref<FormErrors<LoginForm>>()
 
-  const handleServerError = (error: AuthError) => {
-    serverError.value = error.message === 'Network Error'? 'Network error occurred' : error.message
+  const handleServerError = (error: unknown) => {
+    if (typeof error === 'object' && error!== null) {
+      const errorResponse = error as ErrorResponse
+      if (errorResponse?.response?.data?.detail) {
+        serverError.value = errorResponse.response.data.detail
+      } else {
+        serverError.value = 'An unexpected error occurred'
+      }
+    }
+
   }
   const handleLoginForm = async (form: LoginForm) => {
     realtimeErrors.value = {

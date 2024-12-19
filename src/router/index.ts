@@ -14,7 +14,7 @@ router.beforeEach(async (to, from) => {
 
   if (authStore.user && isAuthPage) {
     return {
-      name: '/login'
+      name: '/'
     }
   }
   if (!authStore.user && !isAuthPage) {

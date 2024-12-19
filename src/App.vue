@@ -2,7 +2,7 @@
 const errorStore = useErrorStore()
 
 onErrorCaptured((error) => {
-  errorStore.setError(error)
+  errorStore.setError({ error, customCode: 500 })
   console.error('An error occurred:', error)
 })
 
@@ -32,7 +32,7 @@ useMeta({
   <metainfo></metainfo>
   <Transition name="fade" mode="out-in">
     <Component :is="user ? AuthLayout : GuestLayout" :key="user?.id">
-      <AppErrorPage v-if="errorStore.errors" />
+      <AppErrorPage v-if="errorStore.activeError" />
       <RouterView v-else v-slot="{ Component, route }">
         <Transition name="fade" mode="out-in">
           <div class="w-full" :key="route.path">
