@@ -13,8 +13,11 @@ export interface User {
 
 export interface Profile {
   id: number;
+  photo: string;
   bio: string;
   date_of_birth: string;
   location: string;
   user: User;
+  notifications: Array<string>;
+  social_network: Array<string>;
 }

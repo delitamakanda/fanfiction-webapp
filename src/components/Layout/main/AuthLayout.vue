@@ -23,6 +23,7 @@ provide(menuKey, {
             {{ pageData.title }}
           </h1>
         </div>
+        <slot />
       </main>
     </div>
   </div>

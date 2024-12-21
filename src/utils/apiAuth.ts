@@ -30,3 +30,14 @@ export const login = async (form: LoginForm) => {
     }
 
 }
+
+export const logout = async () => {
+ try {
+    await axiosClient.post('/accounts/logout/')
+     window.localStorage.removeItem('access_token')
+     window.localStorage.removeItem('refresh_token')
+     return { error: null, isLoggedOut: true }
+ } catch (error) {
+   return { error }
+ }
+}

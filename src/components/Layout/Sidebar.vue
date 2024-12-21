@@ -6,38 +6,53 @@ const { profile } = storeToRefs(useAuthStore())
 
 const links = [
   {
+    title: 'Homepage',
+    to: '/',
+    icon: 'lucide:home',
+  },
+  {
     title: 'Dashboard',
     to: '/dashboard',
-    icon: 'lucide:home'
+    icon: 'lucide:chart-bar',
   },
   {
     title: 'My Fanfics',
     to: '/fanfics',
-    icon: 'lucide:book-open'
+    icon: 'lucide:book-open',
   },
   {
     title: 'Posts',
     to: '/posts',
-    icon: 'lucide:message-square'
+    icon: 'lucide:message-square',
   },
-  {
-    title: 'Help center',
-    to: '/help',
-    icon: 'lucide:circle-help'
-  }
 ]
 
 const accountLinks = computed(() => {
   return [
     {
       title: 'Profile',
-      to: `/user/${profile.value?.username}`,
-      icon: 'lucide:user'
+      to: `/users/${profile.value?.user?.username}`,
+      icon: 'lucide:users',
+    },
+    {
+      title: 'Settings',
+      to: '/settings',
+      icon: 'lucide:settings',
+    },
+    {
+      title: 'About',
+      to: '/about',
+      icon: 'lucide:info',
+    },
+    {
+      title: 'Help center',
+      to: '/help',
+      icon: 'lucide:circle-help',
     },
     {
       title: 'Sign Out',
-      icon: 'lucide:log-out'
-    }
+      icon: 'lucide:log-out',
+    },
   ]
 })
 
@@ -45,7 +60,14 @@ const router = useRouter()
 
 const executeAction = async (linkTitle: string) => {
   if (linkTitle === 'Sign Out') {
-   // todo sign out logic
+    const { logout } = await import('@/utils/apiAuth')
+    const { isLoggedOut } = await logout()
+    if (isLoggedOut) {
+      const { user, profile } = storeToRefs(useAuthStore())
+      user.value = null
+      profile.value = null
+      router.push('/login')
+    }
   }
 }
 
@@ -55,7 +77,7 @@ const { menuOpen, toggleMenu } = inject(menuKey) as MenuInjectionOptions
 const windowWidth = useWindowSize().width
 
 watchEffect(() => {
-  menuOpen.value = windowWidth.value > 1024;
+  menuOpen.value = windowWidth.value > 1024
 })
 </script>
 
@@ -64,9 +86,7 @@ watchEffect(() => {
     class="flex flex-col h-screen gap-2 border-r fixed bg-muted/40 transition-[width]"
     :class="{ 'w-52': menuOpen, 'w-24': !menuOpen }"
   >
-    <div
-      class="flex h-16 items-center border-b px-2 lg:px-4 shrink-0 gap-1 justify-between"
-    >
+    <div class="flex h-16 items-center border-b px-2 lg:px-4 shrink-0 gap-1 justify-between">
       <Button @click="toggleMenu" variant="outline" size="icon" class="w-8 h-8">
         <iconify-icon icon="lucide:menu"></iconify-icon>
       </Button>
@@ -78,9 +98,7 @@ watchEffect(() => {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuItem @click="$emit('taskClicked')">
-            Task
-          </DropdownMenuItem>
+          <DropdownMenuItem @click="$emit('taskClicked')"> Task </DropdownMenuItem>
           <DropdownMenuItem> Project </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

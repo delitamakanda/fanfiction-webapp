@@ -8,10 +8,11 @@ export const useAuthStore = defineStore('auth-store', () => {
   const setProfile = async () => {
     if (!user.value) {
       profile.value = null
+      return
     }
 
     if (!profile.value || profile.value.id !== user.value?.id) {
-      const { data } = await axiosClient.get<Profile>(`/profiles/${user.value?.id}/`)
+      const { data } = await axiosClient.get<Profile>(`accounts/users/${user.value?.username}/profile/`)
 
       profile.value = data || null
     }
@@ -28,10 +29,13 @@ export const useAuthStore = defineStore('auth-store', () => {
   }
 
   const getSession = async () => {
-    //const { data } = await axiosClient.get<User>('/user/')
-    //if (data) {
-      // await setAuth(<User>({  id: 1, username: 'test', email: 'test@test.com', first_name: 'Test', last_name: 'User', date_joined: '2022-01-01' }))
-    //}
+    if (!window.localStorage.getItem('access_token')) {
+      return
+    }
+    const { data } = await axiosClient.get<User>('/accounts/user/')
+    if (data) {
+      await setAuth(<User>data)
+    }
   }
 
   const trackAuthChanges = async () => {
@@ -39,7 +43,6 @@ export const useAuthStore = defineStore('auth-store', () => {
       return
     }
     isTrackingAuthChanges.value = true
-    // todo setup auth changes tracking
   }
 
   return {
