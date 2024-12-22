@@ -29,13 +29,17 @@ export const useAuthStore = defineStore('auth-store', () => {
   }
 
   const getSession = async () => {
-    if (!window.localStorage.getItem('access_token')) {
-      return
+    if (window.localStorage.getItem('access_token') && window.localStorage.getItem('refresh_token')) {
+      if (!user.value || !user.value.id) {
+        const { data } = await axiosClient.get<User>('/accounts/user/')
+        if (data) {
+          await setAuth(<User>data)
+        }
+      }
+    } else {
+      await setAuth(null)
     }
-    const { data } = await axiosClient.get<User>('/accounts/user/')
-    if (data) {
-      await setAuth(<User>data)
-    }
+
   }
 
   const trackAuthChanges = async () => {
