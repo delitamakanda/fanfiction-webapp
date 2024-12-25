@@ -63,7 +63,6 @@ const accountLinks = computed(() => {
 const router = useRouter()
 
 const executeAction = async (linkTitle: string) => {
-  console.log('Clicked on: ', linkTitle)
   if (linkTitle === 'Sign Out') {
     const { logout } = await import('@/utils/apiAuth')
     const { isLoggedOut } = await logout()
@@ -74,9 +73,7 @@ const executeAction = async (linkTitle: string) => {
       router.push('/login')
     }
   } else if (linkTitle === 'Forum') {
-    console.log('link to forum: ', linkTitle)
     const link = import.meta.env.VITE_APP_BASE_URL_FORUM
-    console.log('link to forum: ', link)
     window.open(link, '_blank')
   }
 }
