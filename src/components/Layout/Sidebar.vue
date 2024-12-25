@@ -16,7 +16,7 @@ const links = [
     icon: 'lucide:chart-bar',
   },
   {
-    title: 'My Fanfics',
+    title: 'All Fanfictions',
     to: '/fanfics',
     icon: 'lucide:book-open',
   },

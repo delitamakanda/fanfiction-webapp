@@ -10,7 +10,7 @@ router.beforeEach(async (to, from) => {
   const authStore = useAuthStore()
   await authStore.getSession()
 
-  const isAuthPage = ['/login', '/register'].includes(to.path)
+  const isAuthPage = ['/login', '/register', '/forgot-password'].includes(to.path)
 
   if (authStore.user && isAuthPage) {
     return {

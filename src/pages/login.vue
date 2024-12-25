@@ -57,7 +57,7 @@ const signIn = async () => {
           <div class="grid gap-2">
             <div class="flex items-center">
               <Label id="password">Password</Label>
-              <a href="#" class="inline-block ml-auto text-xs underline"> Forgot your password? </a>
+              <RouterLink to="/forgot-password" class="inline-block ml-auto text-xs underline"> Forgot your password? </RouterLink>
             </div>
             <Input
               id="password"

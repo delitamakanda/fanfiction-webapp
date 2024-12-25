@@ -1,6 +1,7 @@
 import { useMemoize } from '@vueuse/core'
 import type { Post } from '@/utils/apiPost'
 import { fetchPosts, fetchPostBySlug } from '@/utils/apiPost'
+import { validateCache } from './helper'
 
 export const usePostsStore = defineStore('posts-store', () => {
   const posts = ref<Post[] | null>(null)
@@ -9,34 +10,6 @@ export const usePostsStore = defineStore('posts-store', () => {
     async () => await fetchPosts(),
   )
   const loadPost = useMemoize(async (slug: string) => await fetchPostBySlug(slug))
-
-  interface ValidateCacheParams {
-    ref: typeof posts | typeof post
-    query: typeof fetchPosts | typeof fetchPostBySlug
-    key: string
-    loaderFn: typeof loadPosts | typeof loadPost
-  }
-
-  const validateCache = ({
-    ref,
-    query,
-    key,
-    loaderFn,
-  }: ValidateCacheParams) => {
-    if (ref.value) {
-      const finalQuery = typeof query === 'function' ? query(key) : query
-      finalQuery.then(({ data, error }) => {
-        if (JSON.stringify(ref.value) === JSON.stringify(data)) {
-          return
-        } else {
-          loaderFn.delete(key)
-          if (!error && data) {
-            ref.value = data
-          }
-        }
-      })
-    }
-  }
 
   const getPosts = async () => {
     posts.value = null

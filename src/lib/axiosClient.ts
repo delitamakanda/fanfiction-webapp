@@ -30,7 +30,7 @@ axiosClient.interceptors.response.use(
         originalRequest._retry = true
         try {
           const response = await axiosClient.post<never>('/refresh-token', {
-            refresh_token: JSON.parse(<string>window.localStorage.getItem('refresh_token')),
+            refresh: JSON.parse(<string>window.localStorage.getItem('refresh_token')),
           })
           const { access } = response.data
           window.localStorage.setItem('access_token', JSON.stringify(access))
