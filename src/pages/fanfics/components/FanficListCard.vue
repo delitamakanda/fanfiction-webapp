@@ -1,8 +1,6 @@
 <template>
+  <RouterLink :to="`fanfics/${fanfic.slug}`">
     <div class="fanficListCard">
-        <div class="fanficImageContainer">
-            <img v-if="fanfic.picture" class="fanficImage" :src="fanfic.picture" :alt="fanfic.title" />
-        </div>
         <div class="px-4">
             <div class="flex flex-col h-full">
                 <p class="font-semibold text-lg mb-2">{{ fanfic.title }}</p>
@@ -13,6 +11,7 @@
             </div>
         </div>
     </div>
+  </RouterLink>
 </template>
 
 <script setup lang="ts">
@@ -24,7 +23,7 @@ defineProps<{ fanfic: Fanfic }>();
 
 <style>
 .fanficListCard {
-    @apply bg-white p-4 rounded-md shadow-md flex justify-start;
+    @apply  p-4 rounded-md shadow-md flex justify-start;
 }
 
 .fanficListCard:hover {

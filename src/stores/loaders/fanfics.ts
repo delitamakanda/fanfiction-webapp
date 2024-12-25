@@ -7,13 +7,13 @@ export const useFanficsStore = defineStore('fanfics-store', () => {
   const fanfics = ref<Fanfic[] | null>(null)
   const fanfic = ref<Fanfic | null>(null)
   const loadFanfics = useMemoize(
-    async () => await fetchFanfics(),
+    async (params = {}) => await fetchFanfics(params || {}),
   )
   const loadFanfic = useMemoize(async (slug: string) => await fetchFanfic(slug))
 
-  const getFanfics = async () => {
+  const getFanfics = async (params = {}) => {
     fanfics.value = null
-    const { data, error, status } = await loadFanfics()
+    const { data, error, status } = await loadFanfics(params)
     if (error) {
       useErrorStore().setError({ error: error as Error, customCode: status })
     }

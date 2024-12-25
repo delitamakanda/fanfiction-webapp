@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-usePageStore().pageData.title = 'Fanfics'
+usePageStore().pageData.title = 'Fanfictions'
 const fanficsLoader = useFanficsStore()
 const { fanfics } = storeToRefs(fanficsLoader);
 const { getFanfics } = fanficsLoader;
 
-await getFanfics()
+await getFanfics({q: 'publié'})
 import FanficGridCard from './components/FanficGridCard.vue';
 import FanficListCard from './components/FanficListCard.vue';
 import { useFanficLayout, FanficLayout } from '@/composables/useFanficLayout';
@@ -25,7 +25,6 @@ const fanficCardComponent = computed(
 
 <template>
   <div v-if="fanfics">
-    <p>Welcome to the fanfics section!</p>
     <button @click.prevent="setLayout(LAYOUTS.grid)">Layout grid</button>
     <button @click.prevent="setLayout(LAYOUTS.list)">Layout list</button>
     <FanficLayout class="mx-auto max-w-7-xl">
