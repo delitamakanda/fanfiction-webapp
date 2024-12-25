@@ -1,5 +1,5 @@
 import axiosClient from '@/lib/axiosClient'
-import type { LoginForm, RegistrationForm } from '@/types/AuthForm'
+import type { LoginForm, RegistrationForm, ResetPasswordForm } from '@/types/AuthForm'
 
 export const register = async (form: RegistrationForm) => {
     try {
@@ -40,4 +40,15 @@ export const logout = async () => {
  } catch (error) {
    return { error }
  }
+}
+
+export const resetPassword = async (form: ResetPasswordForm) => {
+  try {
+    const { data, status } = await axiosClient.post<never>('accounts/password-reset/',{
+      email: form.email
+    })
+    return { data, error: null, status }
+  } catch (error) {
+    return { error }
+  }
 }

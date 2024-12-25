@@ -7,3 +7,7 @@ export interface RegistrationForm extends LoginForm {
   email: string;
   confirmPassword: string;
 }
+
+export interface ResetPasswordForm {
+  email: string;
+}

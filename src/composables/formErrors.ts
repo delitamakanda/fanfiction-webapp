@@ -5,7 +5,7 @@ type FormErrors<T> = {
 }
 
 interface ErrorResponse {
-  response?: { data?: { detail?: string } }
+  response?: { data?: { detail?: string, email?: string[] } }
 }
 
 export const useFormErrors = () => {
@@ -17,6 +17,8 @@ export const useFormErrors = () => {
       const errorResponse = error as ErrorResponse
       if (errorResponse?.response?.data?.detail) {
         serverError.value = errorResponse.response.data.detail
+      } else if (errorResponse?.response?.data?.email?.[0]) {
+        serverError.value = errorResponse.response.data.email[0]
       } else {
         serverError.value = 'An unexpected error occurred'
       }
