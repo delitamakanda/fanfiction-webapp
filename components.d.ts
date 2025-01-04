@@ -15,6 +15,7 @@ declare module 'vue' {
     AvatarFallback: typeof import('./src/components/ui/avatar/AvatarFallback.vue')['default']
     AvatarImage: typeof import('./src/components/ui/avatar/AvatarImage.vue')['default']
     Button: typeof import('./src/components/ui/button/Button.vue')['default']
+    ButtonLoader: typeof import('./src/components/core/Buttons/ButtonLoader.vue')['default']
     Card: typeof import('./src/components/ui/card/Card.vue')['default']
     CardContent: typeof import('./src/components/ui/card/CardContent.vue')['default']
     CardDescription: typeof import('./src/components/ui/card/CardDescription.vue')['default']
