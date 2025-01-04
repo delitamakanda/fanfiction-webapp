@@ -61,6 +61,7 @@ declare global {
   const unref: typeof import('vue')['unref']
   const useAttrs: typeof import('vue')['useAttrs']
   const useAuthStore: typeof import('./src/stores/auth')['useAuthStore']
+  const useCategoryStore: typeof import('./src/stores/loaders/category')['useCategoryStore']
   const useCollabs: typeof import('./src/composables/collabs')['useCollabs']
   const useCounterStore: typeof import('./src/stores/counter')['useCounterStore']
   const useCssModule: typeof import('vue')['useCssModule']
