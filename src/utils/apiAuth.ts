@@ -34,8 +34,7 @@ export const login = async (form: LoginForm) => {
 export const logout = async () => {
  try {
     await axiosClient.post('/accounts/logout/')
-     window.localStorage.removeItem('access_token')
-     window.localStorage.removeItem('refresh_token')
+    removeTokens()
      return { error: null, isLoggedOut: true }
  } catch (error) {
    return { error }
@@ -51,4 +50,19 @@ export const resetPassword = async (form: ResetPasswordForm) => {
   } catch (error) {
     return { error }
   }
+}
+
+export const disableAccount = async () => {
+  try {
+    const { status } = await axiosClient.get<never>('/accounts/disable-account/', {})
+    removeTokens()
+    return { isDeactivate: true, error: null, status }
+  } catch (error) {
+    return { error }
+  }
+}
+
+function removeTokens() {
+  window.localStorage.removeItem('access_token')
+  window.localStorage.removeItem('refresh_token')
 }
