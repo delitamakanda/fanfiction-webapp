@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { VERSION } from '@/constants/version'
+usePageStore().pageData.title = `Settings`
 </script>
 <template>
   <h1>

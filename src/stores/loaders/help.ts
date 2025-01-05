@@ -10,7 +10,7 @@ export const useHelpStore = defineStore('help-store', () => {
     async () => await fetchQuestions(),
   )
   const loadLexique = useMemoize(
-    async (searchParams = '') => await fetchLexique(searchParams as string),
+    async (params = {}) => await fetchLexique(params || {}),
   )
 
   const getFaqs = async () => {
@@ -30,19 +30,19 @@ export const useHelpStore = defineStore('help-store', () => {
     })
   }
 
-  const getLexique = async (searchParams = '') => {
+  const getLexique = async (params = { }) => {
     lexique.value = null
-    const { data, error, status } = await loadLexique(searchParams)
+    const { data, error, status } = await loadLexique(params)
     if (error) {
       useErrorStore().setError({ error: error as Error, customCode: status })
     }
     if (data) {
-      lexique.value = data
+      lexique.value = data.results
     }
     validateCache({
       ref: lexique,
       query: fetchLexique,
-      key: searchParams,
+      key: 'lexique',
       loaderFn: loadLexique,
     })
   }

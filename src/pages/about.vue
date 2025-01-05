@@ -6,6 +6,7 @@ useMeta({
     { name: 'keywords', content: 'about, website' }
   ],
 })
+usePageStore().pageData.title = `About`
 </script>
 
 <template>

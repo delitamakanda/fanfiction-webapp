@@ -8,10 +8,14 @@ const formData = ref({
   search: '',
 })
 
+const search = async () => {
+  await getLexique({ q: formData.value.search })
+}
+
 watchDebounced(
   formData,
-  () => {
-    getLexique(formData.value.search)
+  async () => {
+    await search()
   },
   {
     debounce: 1000,
@@ -19,7 +23,7 @@ watchDebounced(
   },
 )
 
-await getLexique()
+await getLexique({ q: formData.value.search  })
 </script>
 <template>
   <RouterLink to="/help/faq">FAQ</RouterLink>

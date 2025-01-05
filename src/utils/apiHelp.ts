@@ -24,11 +24,16 @@ export const fetchQuestions = async () => {
   }
 }
 
-export const fetchLexique = async (searchParams = '') => {
+export const fetchLexique = async (params = {}) => {
   try {
-    const { data: { results }, status } = await axiosClient.get<{ count: number; next: string; previous: string; results: Lexique[] }>(`/help/lexique/?q=${searchParams}`);
-    return { data: results, error: null, status };
+    const { data, status } = await axiosClient.get<{
+      count: number
+      next: string
+      previous: string
+      results: Lexique[]
+    }>(`/help/lexique/`, {params})
+    return { data, error: null, status }
   } catch (error) {
-    throw new Error(error as string);
+    throw new Error(error as string)
   }
 }
