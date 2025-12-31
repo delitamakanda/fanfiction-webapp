@@ -1,5 +1,5 @@
 # fanfictionv3
-[![Node.js CI](https://github.com/delitamakanda/fanfiction-webapp/actions/workflows/ci.yml/badge.svg)](https://github.com/delitamakanda/fanfiction-webapp/actions/workflows/ci.yml)
+[![Node.js CI](https://github.com/delitamakanda/fanfiction-webapp/actions/workflows/ci.yml/badge.svg?branch=main&event=push)](https://github.com/delitamakanda/fanfiction-webapp/actions/workflows/ci.yml)
 This template should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup
