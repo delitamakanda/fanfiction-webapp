@@ -29,7 +29,7 @@ axiosClient.interceptors.response.use(
       if (error.response.status === 401 && !originalRequest._retry) {
         originalRequest._retry = true
         try {
-          const response = await axiosClient.post<never>('/refresh-token', {
+          const response = await axiosClient.post<never>('/auth/token/refresh/', {
             refresh: JSON.parse(<string>window.localStorage.getItem('refresh_token')),
           })
           const { access } = response.data

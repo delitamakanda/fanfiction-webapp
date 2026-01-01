@@ -2,7 +2,7 @@
 import { menuKey } from '@/utils/injectionKeys'
 import type { MenuInjectionOptions } from '@/utils/injectionKeys'
 import { useWindowSize } from '@vueuse/core'
-const { profile } = storeToRefs(useAuthStore())
+const { user } = storeToRefs(useAuthStore())
 
 const links = [
   {
@@ -31,7 +31,7 @@ const accountLinks = computed(() => {
   return [
     {
       title: 'Profile',
-      to: `/users/${profile.value?.user?.username}`,
+      to: `/users/${user?.value?.username}`,
       icon: 'lucide:users',
     },
     {
@@ -67,9 +67,8 @@ const executeAction = async (linkTitle: string) => {
     const { logout } = await import('@/utils/apiAuth')
     const { isLoggedOut } = await logout()
     if (isLoggedOut) {
-      const { user, profile } = storeToRefs(useAuthStore())
+      const { user } = storeToRefs(useAuthStore())
       user.value = null
-      profile.value = null
       router.push('/login')
     }
   } else if (linkTitle === 'Forum') {

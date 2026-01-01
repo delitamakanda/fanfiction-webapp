@@ -1,4 +1,5 @@
 import axiosClient from '@/lib/axiosClient'
+import type { FAQ } from '@/utils/apiHelp.ts'
 
 export interface Category {
   name: string;
@@ -13,8 +14,8 @@ export interface Subcategory extends Category {
 
 export const fetchCategories = async () => {
   try {
-    const { data, status } = await axiosClient.get<Category[]>('/categories/');
-    return { data, error: null, status };
+    const { data: { results }, status } = await axiosClient.get<{ count: number; next: string; previous: string; results: Category[] }>('/v1/categories/');
+    return { data: results, error: null, status };
   } catch (error) {
     throw new Error(error as string);
   }
@@ -22,8 +23,13 @@ export const fetchCategories = async () => {
 
 export const fetchSubcategories = async () => {
   try {
-    const { data, status } = await axiosClient.get<Subcategory[]>('/categories/subcategory/');
-    return { data, error: null, status };
+    const { data: { results }, status } = await axiosClient.get<{
+      count: number
+      next: string
+      previous: string
+      results: Subcategory[]
+    }>('/v1/categories/subcategory/')
+    return { data: results, error: null, status };
   } catch (error) {
     throw new Error(error as string);
   }

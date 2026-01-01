@@ -17,7 +17,7 @@ export interface Lexique {
 
 export const fetchQuestions = async () => {
   try {
-    const { data: { results }, status } = await axiosClient.get<{ count: number; next: string; previous: string; results: FAQ[] }>('/help/faq/');
+    const { data: { results }, status } = await axiosClient.get<{ count: number; next: string; previous: string; results: FAQ[] }>('/v1/help/faq/');
     return { data: results, error: null, status };
   } catch (error) {
     throw new Error(error as string);
@@ -26,13 +26,13 @@ export const fetchQuestions = async () => {
 
 export const fetchLexique = async (params = {}) => {
   try {
-    const { data, status } = await axiosClient.get<{
+    const { data: { results }, status } = await axiosClient.get<{
       count: number
       next: string
       previous: string
       results: Lexique[]
-    }>(`/help/lexique/`, {params})
-    return { data, error: null, status }
+    }>(`/v1/help/lexique/`, {params})
+    return { data: results, error: null, status }
   } catch (error) {
     throw new Error(error as string)
   }

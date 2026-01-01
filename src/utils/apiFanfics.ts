@@ -30,7 +30,7 @@ export interface Fanfic {
 
 export const fetchFanfic = async (slug: string) => {
   try {
-    const { data, status } = await axiosClient.get<Fanfic>(`/fanfics/${slug}/`);
+    const { data, status } = await axiosClient.get<Fanfic>(`/v1/fanfics/${slug}/`);
     return { data, error: null, status };
   } catch (error) {
     throw new Error(error as string);
@@ -39,7 +39,7 @@ export const fetchFanfic = async (slug: string) => {
 
 export const fetchFanfics = async (params = {}) => {
   try {
-    const { data, status } = await axiosClient.get<{count: number; results: Fanfic[]; next: string, previous: string}>('/fanfics/', { params });
+    const { data, status } = await axiosClient.get<{count: number; results: Fanfic[]; next: string, previous: string}>('/v1/fanfics/', { params });
     return { data, error: null, status };
   } catch (error) {
     throw new Error(error as string);

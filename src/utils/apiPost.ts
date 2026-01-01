@@ -21,7 +21,7 @@ export interface Post {
 
 export const fetchPosts = async () => {
   try {
-    const { data: { results }, status } = await axiosClient.get<{count: number; next: string; previous: string; results: Post[]}>('/posts/')
+    const { data: { results }, status } = await axiosClient.get<{count: number; next: string; previous: string; results: Post[]}>('/v1/posts/')
     return { data: results, error: null , status };
   } catch (error) {
     return { error };
@@ -30,7 +30,7 @@ export const fetchPosts = async () => {
 
 export const fetchPostBySlug = async (slug: string) => {
   try {
-    const response = await axiosClient.get<Post>(`/posts/${slug}/`);
+    const response = await axiosClient.get<Post>(`/v1/posts/${slug}/`);
     return { data: response.data, error: null, status: response.status };
   } catch (error) {
     return { error };

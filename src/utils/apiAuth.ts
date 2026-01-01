@@ -3,7 +3,7 @@ import type { LoginForm, RegistrationForm, ResetPasswordForm } from '@/types/Aut
 
 export const register = async (form: RegistrationForm) => {
     try {
-      const response = await axiosClient.post<never>('/accounts/signup/', {
+      const response = await axiosClient.post<never>('/v1/accounts/signup/', {
         email: form.email,
         password: form.password,
         username: form.username,
@@ -17,7 +17,7 @@ export const register = async (form: RegistrationForm) => {
 
 export const login = async (form: LoginForm) => {
     try {
-       const response = await axiosClient.post<never>('/token', {
+       const response = await axiosClient.post<never>('/v1/accounts/login/', {
         username: form.username,
         password: form.password,
       })
@@ -33,7 +33,10 @@ export const login = async (form: LoginForm) => {
 
 export const logout = async () => {
  try {
-    await axiosClient.post('/accounts/logout/')
+    await axiosClient.post('/v1/accounts/logout/', {
+      all: 'true',
+      refresh_token: window.localStorage.getItem('refresh_token')
+    })
     removeTokens()
      return { error: null, isLoggedOut: true }
  } catch (error) {
@@ -43,7 +46,7 @@ export const logout = async () => {
 
 export const resetPassword = async (form: ResetPasswordForm) => {
   try {
-    const { data, status } = await axiosClient.post<never>('accounts/password-reset/',{
+    const { data, status } = await axiosClient.post<never>('/v1/accounts/password-reset/',{
       email: form.email
     })
     return { data, error: null, status }
@@ -54,7 +57,7 @@ export const resetPassword = async (form: ResetPasswordForm) => {
 
 export const disableAccount = async () => {
   try {
-    const { status } = await axiosClient.get<never>('/accounts/disable-account/', {})
+    const { status } = await axiosClient.get<never>('/v1/accounts/disable-account/', {})
     removeTokens()
     return { isDeactivate: true, error: null, status }
   } catch (error) {
