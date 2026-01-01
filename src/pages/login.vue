@@ -25,8 +25,9 @@ const signIn = async () => {
   const { error } = await login(formData.value) as { error: never }
   if (!error) {
     await router.push('/')
+  } else {
+    handleServerError(error)
   }
-  handleServerError(error)
 }
 </script>
 

@@ -70,6 +70,7 @@ declare global {
   const useFanficLayout: typeof import('./src/composables/useFanficLayout')['useFanficLayout']
   const useFanficsStore: typeof import('./src/stores/loaders/fanfics')['useFanficsStore']
   const useFormErrors: typeof import('./src/composables/formErrors')['useFormErrors']
+  const useHealthStore: typeof import('./src/stores/loaders/health')['useHealthStore']
   const useHelpStore: typeof import('./src/stores/loaders/help')['useHelpStore']
   const useId: typeof import('vue')['useId']
   const useLayout: typeof import('./src/composables/useLayout')['useLayout']
