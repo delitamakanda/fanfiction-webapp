@@ -24,7 +24,7 @@ watchDebounced(
 const signIn = async () => {
   const { error } = await login(formData.value) as { error: never }
   if (!error) {
-    router.push('/')
+    await router.push('/')
   }
   handleServerError(error)
 }

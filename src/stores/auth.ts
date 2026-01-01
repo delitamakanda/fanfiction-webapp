@@ -3,6 +3,8 @@ import { axiosClient } from '@/lib/axiosClient.ts'
 export const useAuthStore = defineStore('auth-store', () => {
   const user = ref<null | User>(null)
   const isTrackingAuthChanges = ref(false)
+  const hasFetchedSession = ref(false)
+  const sessionRequest = ref<Promise<void> | null>(null)
 
   const setAuth = async (userSession: null | User) => {
     if (!userSession) {
@@ -13,17 +15,37 @@ export const useAuthStore = defineStore('auth-store', () => {
   }
 
   const getSession = async () => {
-    if (window.localStorage.getItem('access_token') && window.localStorage.getItem('refresh_token')) {
-      if (!user.value || !user.value.id) {
-        const { data } = await axiosClient.get<User>('/v1/accounts/user/')
-        if (data) {
-          await setAuth(<User>data)
-        }
-      }
-    } else {
-      await setAuth(null)
+    if (hasFetchedSession.value) {
+      return
     }
+    if(sessionRequest.value) {
+      await sessionRequest.value
+      return
+    }
+    sessionRequest.value = (async () => {
+      if (window.localStorage.getItem('access_token') && window.localStorage.getItem('refresh_token')) {
+        if (!user.value ) {
+          const { data: { user } } = await axiosClient.get<{ user: User}>('/v1/accounts/user/')
+          if (user) {
+            console.log('user fetched from API: ', user)
+            await setAuth(<User>user)
+          }
+        }
+      } else {
+        await setAuth(null)
+      }
+      hasFetchedSession.value = true
+    })()
 
+    try {
+      await sessionRequest.value
+    } finally {
+      sessionRequest.value = null
+    }
+  }
+
+  const ensureSession = async () => {
+    await getSession()
   }
 
   const trackAuthChanges = async () => {
@@ -36,6 +58,8 @@ export const useAuthStore = defineStore('auth-store', () => {
   return {
     user,
     isTrackingAuthChanges,
+    hasFetchedSession,
+    ensureSession,
     setAuth,
     getSession,
     trackAuthChanges,

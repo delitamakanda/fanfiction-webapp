@@ -1,21 +1,25 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { routes } from 'vue-router/auto-routes'
 
+const PUBLIC_ROUTES = ['/login', '/register', '/forgot-password',]
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes
 })
 
-router.beforeEach(async (to, from) => {
+router.beforeEach(async (to, _from, next) => {
   const authStore = useAuthStore()
-  await authStore.getSession()
+  const isPublicRoute = PUBLIC_ROUTES.includes(to.path)
 
-  const isNotAuthPage = ['/login', '/register', '/forgot-password',].includes(to.path)
-
-  if (!isNotAuthPage && !authStore.user) {
-    return { name: 'login' }
+  if(!isPublicRoute) {
+    await authStore.ensureSession()
   }
-  return true
+
+  if (!isPublicRoute && !authStore.user) {
+    return next('/login')
+  }
+  return next()
 })
 
 export default router
