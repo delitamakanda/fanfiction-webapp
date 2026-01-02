@@ -51,6 +51,7 @@ const accountLinks = computed(() => {
     },
     {
       title: 'Forum',
+      to: '/forum',
       icon: 'lucide:message-circle',
     },
     {
@@ -71,9 +72,6 @@ const executeAction = async (linkTitle: string) => {
       user.value = null
       router.push('/login')
     }
-  } else if (linkTitle === 'Forum') {
-    const link = import.meta.env.VITE_APP_BASE_URL_FORUM
-    window.open(link, '_blank')
   }
 }
 
@@ -104,8 +102,15 @@ watchEffect(() => {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuItem @click="$emit('taskClicked')"> Task </DropdownMenuItem>
-          <DropdownMenuItem> Fanfic </DropdownMenuItem>
+          <DropdownMenuItem @click="$emit('taskClicked')">
+            <RouterLink to="/fanfics/create">Create a new fanfic</RouterLink>
+          </DropdownMenuItem>
+          <DropdownMenuItem @click="$emit('taskClicked')">
+            <RouterLink to="/fanfics/manage">Manage my fanfics</RouterLink>
+          </DropdownMenuItem>
+          <DropdownMenuItem @click="$emit('taskClicked')">
+            <RouterLink :to="`/accounts/${user?.username}`">Manage my profile</RouterLink>
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
